@@ -11913,7 +11913,7 @@ MPEG bitstream decoded on different decoders will result in essentially the same
 <li>Analyze the block using a 32-band equally-spaced (analysis) filter bank, producing $36$ coeffs/subband.</li>
 <li>For each subband:<ol>
 <li>Analyze transients. If detected, use a sequece of start/short*3/stop windows. Otherwise, use a long window.
-<img src="figs/windows.png" width=800></li>
+<img src="data/windows.png" width=800></li>
 <li>Compute <a href="https://en.wikipedia.org/wiki/Modified_discrete_cosine_transform">MDCT</a>. This produces $36$ (long), $30$ (start/stop) or $12$ coeffs/subband (short). This step produces $18$ coeffs/subband (long), $15$ coeffs/subband (start/stop) and $6$ coeffs/subband (short).</li>
 <li>Apply scalefactors to optimize quantization.</li>
 </ol>
