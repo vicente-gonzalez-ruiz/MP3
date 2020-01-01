@@ -1,0 +1,166 @@
+\title{MPEG Audio~\cite{sayood2017introduction}}
+\author{Vicente González Ruiz}
+\maketitle
+\tableofcontents
+
+\section{Intro}
+\begin{itemize}
+\item Input: a sequence of 16-bit PCM samples.
+
+\item Output: a sequence of MPEG Audio frames (frame = header +
+  code-stream) which can be streamed.
+
+\begin{verbatim}
+audio   +-----------+       +--------------+         +----------+
+channel | Time      |       | Quantization |         |          | MPEG audio
+---+--->| frequency |---+-->| and          |-------> | Framming |------->
+   |    | mapping   |   |   | coding       |         |          |
+   |    +-----------+   |   +--------------+         +----------+
+   |                    |           ^
+   |                    |           |
+   |                    |   +--------------+
+   |                    +-->| Phycho-      |
+   |                        | acustic      |
+   +----------------------->| model        |
+                            +--------------+
+\end{verbatim}
+
+\item The MPEG audio bitstream definition is normative. Most guidance
+  about encoding is informative. Thus, two MPEG-compliant bitstreams
+  that encode the same audio material at the same rate but on
+  different encoders may sound very different. On the other hand, a
+  given MPEG bitstream decoded on different decoders will result in
+  essentially the same output.
+\end{itemize}
+
+\section{\href{https://en.wikipedia.org/wiki/MPEG-1_Audio_Layer_I}{Layer I}}
+\begin{itemize}
+\item 4:1 compression (384 kbps).
+\item CBR (Constant Bit-Rate).
+\end{itemize}
+
+\subsection{Encoder}
+\begin{enumerate}
+\item Split $s[n]$ into blocks of $12\times 32=384$ samples. For each
+  block:
+  \begin{enumerate}
+   \item Analyze the block using a 32-band equally-spaced (analysis)
+     filter bank, producing $12$ coeffs/subband (the coeffs are
+     downsampled (subsampled, decimated) by factor of $32$). $342$
+     time-domain samples are transformed into $32$ subbands with $12$
+     coeffs. Notice that in a subband, each coeff can be considered as
+     a sample of such subband.
+   \item Scale each block of $12$ coeffs to ensure that the entire
+     range of the selected quantizer will be used. Output the
+     *scalefactor*.
+   \item Using the
+     \href{https://en.wikipedia.org/wiki/Fast_Fourier_transform}{FFT},
+     compute the ATH for the block (considering the masking effects).
+   \item Let $R^*$ the bit-rate selected by the user. While the
+     generated bit-rate $R\leq R^*$:
+     \begin{enumerate}
+     \item Decrement the quantization step $\Delta_b$ for each subband
+       $b$, proportionally to the ATH in $b$. Compute $R$. The
+       bit-rate is controlled be switching between quantizers with
+       different number of bits.
+     \end{enumerate}
+   \item Output $\{\Delta_b\}_{b=1}^{32}$ and the quantization
+     indexes.
+  \end{enumerate}
+\end{enumerate}
+
+\subsection{Decoder}
+\begin{enumerate}
+\item For each input frame:
+  \begin{enumerate}
+   \item "Dequantize" the coeffs of each subband.
+   \item Descale the coeffs to their original dynamic range.
+   \item Apply the 32-band synthesis filters bank.
+  \end{enumerate}
+\end{enumerate}
+
+\section{Loss information analysis}
+\begin{itemize}
+  \tightlist
+\item Aliasing in the 32-band analysis filter bank.
+\begin{verbatim}
+   ^ Amplitude
+   |     _______     _______     ____....__     _______
+   |    /       \   /       \   /          \   /       \
+   |   /         \ /         \ /            \ /         \
+   |  / subband 0 X subband 1 X              X  sub. 31  \
+   +-/-----------/-\---------/-\-----....---/-\-----------\-> frequency
+\end{verbatim}
+\item Quantization.
+\end{itemize}
+
+\section{\href{https://en.wikipedia.org/wiki/MPEG-1_Audio_Layer_II)}{Layer II}}
+\begin{itemize}
+\item Backward compatibile with MP1.
+\item 8:1 compression (174 kbps).
+\item CBR (Constant Bit-Rate).
+\item Increases block-size to $3\times 12\times 32=1152$ samples.
+\end{itemize}
+
+\section{\href{https://en.wikipedia.org/wiki/MP3}{Layer III}}
+\begin{itemize}
+\item \href{https://www.xataka.com/historia-tecnologica/la-historia-del-mp3-el-formato-que-tras-casi-morir-dos-veces-revoluciono-el-mundo-de-la-musica}{``Rescued'' by Napster}.
+\item Backward compatibile with MP1 and MP2.
+\item CBR and VBR (Variable Bit-Rate). In this last case, users
+  usually select the average bit-rate.
+\item Typically, virtually lossless at 128 kbps for most human beings.
+\item Improved subband analysis by means of the MDCT (using 32
+  subbands, the low-frequency ones contains more than un bark, which
+  generates a poor frequency resolution in the ATH computation).
+\end{itemize}
+
+\subsection{Encoder}
+\begin{enumerate}
+\item Split $s[n]$ into blocks of $36\times 32=1152$ samples. For each
+  block:
+  \begin{enumerate}
+  \item Performs FFT of the block to compute the ATH and windows
+    sequence.
+  \item Analyze the block using a 32-band equally-spaced (analysis)
+    filter bank, producing $36$ coeffs/subband.
+  \item For each subband:
+    \begin{enumerate}
+    \item Analyze transients. If detected, use a sequece of
+      start/short*3/stop windows. Otherwise, use a long window.  <img
+      src="data/windows.png" width=800>
+    \item Compute
+      \href{https://en.wikipedia.org/wiki/Modified_discrete_cosine_transform}{MDCT}. This
+      produces $36$ (long), $30$ (start/stop) or $12$ coeffs/subband
+      (short). This step produces $18$ coeffs/subband (long), $15$
+      coeffs/subband (start/stop) and $6$ coeffs/subband (short).
+      \item Apply scalefactors to optimize quantization.
+     \end{enumerate}
+   \item Distortion control loop: keep (as much as possible) the
+     quantization error below the ATH.
+     \begin{enumerate}
+     \item Rate control loop: Let $R^*$ the bit-rate selected by the
+       user. While the generated bit-rate $R\leq R^*$:
+       \begin{enumerate}
+       \item Decrement the quantization step $\Delta_b$ for each
+         subband $b$, proportionally to the ATH in $b$. Compute $R$
+         after encoding the quantizer indexes with (static) Huffman
+         coding. As in previous layers, a quantizer is selected from a
+         list of predefined logaritmic quantizers.
+       \end{enumerate}
+     \end{enumerate}
+  \end{enumerate}
+\end{enumerate}
+
+\subsection{}
+\begin{enumerate}
+\item For each input frame:
+  \begin{enumerate}
+  \item Decode the Huffman codes.
+   \item ``Dequantize'' the coeffs of each subband.
+   \item Descale the coeffs to their original dynamic range.
+   \item Apply inverse MDCT.
+   \item Apply the 32-band synthesis filters bank.
+  \end{enumerate}
+\end{enumerate}
+
+\bibliography{data-compression}
