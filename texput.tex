@@ -11,6 +11,16 @@
   code-stream) which can be streamed.
 
 \begin{verbatim}
+PCM   +---------+        +---------+ PCM
+----->| Encoder |------->| Decoder |----->
+audio +---------+ stream +---------+ audio'
+
+              audio != audio'
+                 (usually)
+\end{verbatim}
+
+
+\begin{verbatim}
 audio   +-----------+       +--------------+         +----------+
 channel | Time      |       | Quantization |         |          | MPEG audio
 ---+--->| frequency |---+-->| and          |-------> | Framming |------->

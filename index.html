@@ -66,6 +66,19 @@ href="#Q1-1-12">References</a></span>
 
                                                                   
      <div class="verbatim" id="verbatim-1">
+     PCM   +---------+        +---------+ PCM
+      <br />-----&#x003E;| Encoder |-------&#x003E;| Decoder |-----&#x003E;
+      <br />audio +---------+ stream +---------+ audio’
+      <br />
+      <br />              audio != audio’
+      <br />                 (usually)
+</div>
+     <!--l. 20--><p class="nopar" >
+                                                                  
+
+                                                                  
+</p>
+     <div class="verbatim" id="verbatim-2">
      audio   +-----------+       +--------------+         +----------+
       <br />channel | Time      |       | Quantization |         |          | MPEG audio
       <br />---+---&#x003E;| frequency |---+--&#x003E;| and          |-------&#x003E; | Framming |-------&#x003E;
@@ -79,7 +92,7 @@ href="#Q1-1-12">References</a></span>
       <br />   +-----------------------&#x003E;| model        |
       <br />                            +--------------+
 </div>
-     <!--l. 26--><p class="nopar" >
+     <!--l. 36--><p class="nopar" >
      </p></li>
      <li class="itemize">The MPEG audio bitstream deﬁnition is normative. Most guidance
      about encoding is informative. Thus, two MPEG-compliant bitstreams
@@ -87,7 +100,7 @@ href="#Q1-1-12">References</a></span>
      encoders may sound very diﬀerent. On the other hand, a given MPEG
      bitstream decoded on diﬀerent decoders will result in essentially the same
      output.</li></ul>
-<!--l. 36--><p class="noindent" >
+<!--l. 46--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">2   </span> <a 
  id="x1-30002"></a><a 
@@ -96,24 +109,24 @@ href="https://en.wikipedia.org/wiki/MPEG-1_Audio_Layer_I" >Layer I</a></h3>
      <li class="itemize">4:1 compression (384 kbps).
      </li>
      <li class="itemize">CBR (Constant Bit-Rate).</li></ul>
-<!--l. 42--><p class="noindent" >
+<!--l. 52--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">2.1   </span> <a 
  id="x1-40002.1"></a>Encoder</h4>
-<!--l. 43--><p class="noindent" >
+<!--l. 53--><p class="noindent" >
                                                                   
 
                                                                   
      </p><ol  class="enumerate1" >
      <li 
-  class="enumerate" id="x1-4002x1">Split <!--l. 44--><math 
+  class="enumerate" id="x1-4002x1">Split <!--l. 54--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >s</mi><mrow ><mo 
 class="MathClass-open">[</mo><mrow><mi 
 >n</mi></mrow><mo 
 class="MathClass-close">]</mo></mrow></math> into
-     blocks of <!--l. 44--><math 
+     blocks of <!--l. 54--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>1</mn><mn>2</mn> <mo 
 class="MathClass-bin">×</mo> <mn>3</mn><mn>2</mn> <mo 
@@ -122,27 +135,27 @@ class="MathClass-rel">=</mo> <mn>3</mn><mn>8</mn><mn>4</mn></math>
          <ol  class="enumerate2" >
          <li 
   class="enumerate" id="x1-4004x1">Analyze the block using a 32-band equally-spaced (analysis) ﬁlter
-         bank, producing <!--l. 48--><math 
+         bank, producing <!--l. 58--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>1</mn><mn>2</mn></math>
          coeﬀs/subband (the coeﬀs are downsampled (subsampled, decimated)
-         by factor of <!--l. 49--><math 
+         by factor of <!--l. 59--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>3</mn><mn>2</mn></math>).
-         <!--l. 49--><math 
+         <!--l. 59--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>3</mn><mn>4</mn><mn>2</mn></math>
-         time-domain samples are transformed into <!--l. 50--><math 
+         time-domain samples are transformed into <!--l. 60--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>3</mn><mn>2</mn></math>
-         subbands with <!--l. 50--><math 
+         subbands with <!--l. 60--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>1</mn><mn>2</mn></math>
          coeﬀs. Notice that in a subband, each coeﬀ can be considered as a
          sample of such subband.
          </li>
          <li 
-  class="enumerate" id="x1-4006x2">Scale each block of <!--l. 53--><math 
+  class="enumerate" id="x1-4006x2">Scale each block of <!--l. 63--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>1</mn><mn>2</mn></math>
          coeﬀs to ensure that the entire range of the selected quantizer will be
@@ -154,7 +167,7 @@ href="https://en.wikipedia.org/wiki/Fast_Fourier_transform" >FFT</a>, compute th
          masking eﬀects).
          </li>
          <li 
-  class="enumerate" id="x1-4010x4">Let <!--l. 59--><math 
+  class="enumerate" id="x1-4010x4">Let <!--l. 69--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
 ><mi 
@@ -163,7 +176,7 @@ display="inline" ><msup><mrow
 class="MathClass-bin">∗</mo></mrow></msup 
 ></math>
          the bit-rate selected by the user. While the generated bit-rate
-         <!--l. 60--><math 
+         <!--l. 70--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >R</mi> <mo 
@@ -175,7 +188,7 @@ class="MathClass-bin">∗</mo></mrow></msup
 ></math>:
              <ol  class="enumerate3" >
              <li 
-  class="enumerate" id="x1-4012x1">Decrement the quantization step <!--l. 62--><math 
+  class="enumerate" id="x1-4012x1">Decrement the quantization step <!--l. 72--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msub><mrow 
 ><mi 
@@ -183,15 +196,15 @@ display="inline" ><msub><mrow
 ><mi 
 >b</mi></mrow></msub 
 ></math>
-             for each subband <!--l. 63--><math 
+             for each subband <!--l. 73--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >b</mi></math>,
-             proportionally to the ATH in <!--l. 63--><math 
+             proportionally to the ATH in <!--l. 73--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >b</mi></math>.
-             Compute <!--l. 63--><math 
+             Compute <!--l. 73--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >R</mi></math>.
@@ -199,7 +212,7 @@ display="inline" ><mi
              diﬀerent number of bits.</li></ol>
          </li>
          <li 
-  class="enumerate" id="x1-4014x5">Output <!--l. 67--><math 
+  class="enumerate" id="x1-4014x5">Output <!--l. 77--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msubsup><mrow 
 ><mrow ><mo 
@@ -217,11 +230,11 @@ class="MathClass-rel">=</mo><mn>1</mn></mrow><mrow
 ></math>
          and the quantization indexes.</li></ol>
      </li></ol>
-<!--l. 72--><p class="noindent" >
+<!--l. 82--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">2.2   </span> <a 
  id="x1-50002.2"></a>Decoder</h4>
-<!--l. 73--><p class="noindent" >
+<!--l. 83--><p class="noindent" >
                                                                   
 
                                                                   
@@ -238,7 +251,7 @@ class="MathClass-rel">=</mo><mn>1</mn></mrow><mrow
          <li 
   class="enumerate" id="x1-5008x3">Apply the 32-band synthesis ﬁlters bank.</li></ol>
      </li></ol>
-<!--l. 82--><p class="noindent" >
+<!--l. 92--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">3   </span> <a 
  id="x1-60003"></a>Loss information analysis</h3>
@@ -247,7 +260,7 @@ class="MathClass-rel">=</mo><mn>1</mn></mrow><mrow
                                                                   
 
                                                                   
-     <div class="verbatim" id="verbatim-2">
+     <div class="verbatim" id="verbatim-3">
         ^ Amplitude
       <br />   |     _______     _______     ____....__     _______
       <br />   |    /       \   /       \   /          \   /       \
@@ -255,10 +268,10 @@ class="MathClass-rel">=</mo><mn>1</mn></mrow><mrow
       <br />   |  / subband 0 X subband 1 X              X  sub. 31  \
       <br />   +-/-----------/-\---------/-\-----....---/-\-----------\-&#x003E; frequency
 </div>
-     <!--l. 93--><p class="nopar" >
+     <!--l. 103--><p class="nopar" >
      </p></li>
      <li class="itemize">Quantization.</li></ul>
-<!--l. 97--><p class="noindent" >
+<!--l. 107--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
  id="x1-70004"></a><a 
@@ -270,14 +283,14 @@ href="https://en.wikipedia.org/wiki/MPEG-1_Audio_Layer_II)" >Layer II</a></h3>
      </li>
      <li class="itemize">CBR (Constant Bit-Rate).
      </li>
-     <li class="itemize">Increases block-size to <!--l. 102--><math 
+     <li class="itemize">Increases block-size to <!--l. 112--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>3</mn> <mo 
 class="MathClass-bin">×</mo> <mn>1</mn><mn>2</mn> <mo 
 class="MathClass-bin">×</mo> <mn>3</mn><mn>2</mn> <mo 
 class="MathClass-rel">=</mo> <mn>1</mn><mn>1</mn><mn>5</mn><mn>2</mn></math>
      samples.</li></ul>
-<!--l. 105--><p class="noindent" >
+<!--l. 115--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
  id="x1-80005"></a><a 
@@ -299,21 +312,21 @@ href="https://www.xataka.com/historia-tecnologica/la-historia-del-mp3-el-formato
      <li class="itemize">Improved subband analysis by means of the MDCT (using 32 subbands,
      the low-frequency ones contains more than un bark, which generates a
      poor frequency resolution in the ATH computation).</li></ul>
-<!--l. 117--><p class="noindent" >
+<!--l. 127--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">5.1   </span> <a 
  id="x1-90005.1"></a>Encoder</h4>
-<!--l. 118--><p class="noindent" >
+<!--l. 128--><p class="noindent" >
      </p><ol  class="enumerate1" >
      <li 
-  class="enumerate" id="x1-9002x1">Split <!--l. 119--><math 
+  class="enumerate" id="x1-9002x1">Split <!--l. 129--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >s</mi><mrow ><mo 
 class="MathClass-open">[</mo><mrow><mi 
 >n</mi></mrow><mo 
 class="MathClass-close">]</mo></mrow></math> into
-     blocks of <!--l. 119--><math 
+     blocks of <!--l. 129--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>3</mn><mn>6</mn> <mo 
 class="MathClass-bin">×</mo> <mn>3</mn><mn>2</mn> <mo 
@@ -326,7 +339,7 @@ class="MathClass-rel">=</mo> <mn>1</mn><mn>1</mn><mn>5</mn><mn>2</mn></math>
          </li>
          <li 
   class="enumerate" id="x1-9006x2">Analyze the block using a 32-band equally-spaced (analysis) ﬁlter
-         bank, producing <!--l. 125--><math 
+         bank, producing <!--l. 135--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>3</mn><mn>6</mn></math>
          coeﬀs/subband.
@@ -341,22 +354,22 @@ display="inline" ><mn>3</mn><mn>6</mn></math>
              </li>
              <li 
   class="enumerate" id="x1-9012x2">Compute <a 
-href="https://en.wikipedia.org/wiki/Modified_discrete_cosine_transform" >MDCT</a>. This produces <!--l. 133--><math 
+href="https://en.wikipedia.org/wiki/Modified_discrete_cosine_transform" >MDCT</a>. This produces <!--l. 143--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>3</mn><mn>6</mn></math>
-             (long), <!--l. 133--><math 
+             (long), <!--l. 143--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>3</mn><mn>0</mn></math>
-             (start/stop) or <!--l. 133--><math 
+             (start/stop) or <!--l. 143--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>1</mn><mn>2</mn></math>
-             coeﬀs/subband (short). This step produces <!--l. 134--><math 
+             coeﬀs/subband (short). This step produces <!--l. 144--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>1</mn><mn>8</mn></math>
-             coeﬀs/subband (long), <!--l. 134--><math 
+             coeﬀs/subband (long), <!--l. 144--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>1</mn><mn>5</mn></math>
-             coeﬀs/subband (start/stop) and <!--l. 135--><math 
+             coeﬀs/subband (start/stop) and <!--l. 145--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>6</mn></math>
              coeﬀs/subband (short).
@@ -372,7 +385,7 @@ display="inline" ><mn>6</mn></math>
          below the ATH.
              <ol  class="enumerate3" >
              <li 
-  class="enumerate" id="x1-9018x1">Rate control loop: Let <!--l. 141--><math 
+  class="enumerate" id="x1-9018x1">Rate control loop: Let <!--l. 151--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
 ><mi 
@@ -381,7 +394,7 @@ display="inline" ><msup><mrow
 class="MathClass-bin">∗</mo></mrow></msup 
 ></math>
              the bit-rate selected by the user. While the generated bit-rate
-             <!--l. 142--><math 
+             <!--l. 152--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >R</mi> <mo 
@@ -393,7 +406,7 @@ class="MathClass-bin">∗</mo></mrow></msup
 ></math>:
                 <ol  class="enumerate4" >
                 <li 
-  class="enumerate" id="x1-9020x1">Decrement the quantization step <!--l. 144--><math 
+  class="enumerate" id="x1-9020x1">Decrement the quantization step <!--l. 154--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msub><mrow 
 ><mi 
@@ -401,15 +414,15 @@ display="inline" ><msub><mrow
 ><mi 
 >b</mi></mrow></msub 
 ></math>
-                for each subband <!--l. 145--><math 
+                for each subband <!--l. 155--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >b</mi></math>,
-                proportionally to the ATH in <!--l. 145--><math 
+                proportionally to the ATH in <!--l. 155--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >b</mi></math>.
-                Compute <!--l. 145--><math 
+                Compute <!--l. 155--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >R</mi></math>
@@ -419,11 +432,11 @@ display="inline" ><mi
              </li></ol>
          </li></ol>
      </li></ol>
-<!--l. 154--><p class="noindent" >
+<!--l. 164--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">5.2   </span> <a 
  id="x1-100005.2"></a></h4>
-<!--l. 155--><p class="noindent" >
+<!--l. 165--><p class="noindent" >
      </p><ol  class="enumerate1" >
      <li 
   class="enumerate" id="x1-10002x1">For each input frame:
