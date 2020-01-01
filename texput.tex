@@ -126,8 +126,8 @@ channel | Time      |       | Quantization |         |          | MPEG audio
   \item For each subband:
     \begin{enumerate}
     \item Analyze transients. If detected, use a sequece of
-      start/short*3/stop windows. Otherwise, use a long window.  <img
-      src="data/windows.png" width=800>
+      start/short*3/stop windows. Otherwise, use a long window.
+      \svg{windows}{800}
     \item Compute
       \href{https://en.wikipedia.org/wiki/Modified_discrete_cosine_transform}{MDCT}. This
       produces $36$ (long), $30$ (start/stop) or $12$ coeffs/subband
